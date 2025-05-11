@@ -13,7 +13,7 @@ export interface Employee {
 
 @Injectable({ providedIn: 'root' })
 export class EmployeesService {
-  private api = 'http://localhost:3000/products';
+  private api = 'https://68208eef259dad2655ace9b4.mockapi.io/object';
   constructor(private http: HttpClient) { }
 
   fetchAll(): Observable<Employee[]> {
