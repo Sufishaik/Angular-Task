@@ -83,7 +83,7 @@ export class EmployeesComponent implements OnInit {
       this.svc.patch(id1, upd1).toPromise(),
       this.svc.patch(id2, upd2).toPromise()
     ]).then(() => {
-      // reorder local array
+
       moveItemInArray(this.employees, this.employees.findIndex(x => x.id === id1), this.employees.findIndex(x => x.id === id2));
       this.employees = this.employees.map(e => e.id === id1 ? upd1 : e.id === id2 ? upd2 : e);
       this.updateStatus = 'Swapped successfully';
