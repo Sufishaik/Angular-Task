@@ -1,0 +1,56 @@
+<div class="container mx-auto max-w-5xl p-6">
+    <h1 class="text-3xl font-semibold text-gray-800 mb-6 text-center">Employee Management System (Angular)</h1>
+
+    <div class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <input [(ngModel)]="searchTerm" placeholder="Search by title, price, or weight..."
+            class="w-full md:w-1/2 border border-gray-300 p-2 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400" />
+        <button (click)="fetchEmployees()"
+            class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-md shadow">
+            Refresh
+        </button>
+    </div>
+
+    <div *ngIf="loading" class="text-center text-blue-500 font-medium">Loading...</div>
+    <div *ngIf="error" class="text-center text-red-600 font-semibold">{{ error }}</div>
+    <div *ngIf="updateStatus" class="text-center text-green-600 font-medium mb-4">{{ updateStatus }}</div>
+
+    <div class="overflow-x-auto shadow rounded-lg">
+        <table *ngIf="!loading && !error" class="min-w-full bg-white text-sm text-left">
+            <thead class="bg-gray-50 text-gray-700 uppercase text-xs tracking-wider">
+                <tr>
+                    <th (click)="handleSort('id')" class="cursor-pointer px-6 py-3 hover:bg-gray-100">ID</th>
+                    <th (click)="handleSort('title')" class="cursor-pointer px-6 py-3 hover:bg-gray-100">Title</th>
+                    <th (click)="handleSort('price')" class="cursor-pointer px-6 py-3 hover:bg-gray-100">Price</th>
+                    <th (click)="handleSort('weight')" class="cursor-pointer px-6 py-3 hover:bg-gray-100">Weight</th>
+                </tr>
+            </thead>
+            <tbody cdkDropList (cdkDropListDropped)="drop($event)" class="divide-y divide-gray-100">
+                <tr *ngFor="let emp of filteredEmployees" cdkDrag class="hover:bg-blue-50 transition cursor-move">
+                    <!-- Add a custom drag preview and placeholder -->
+                    <ng-template cdkDragPreview>
+                        <table class="bg-white shadow-lg rounded">
+                            <tr class="bg-blue-100">
+                                <td class="px-6 py-4 font-medium text-gray-900">{{ emp.id }}</td>
+                                <td class="px-6 py-4 text-gray-700">{{ emp.title }}</td>
+                                <td class="px-6 py-4 text-gray-700">{{ emp.price }}</td>
+                                <td class="px-6 py-4 text-gray-700">{{ emp.weight }}</td>
+                            </tr>
+                        </table>
+                    </ng-template>
+                    <td class="px-6 py-4 font-medium text-gray-900">{{ emp.id }}</td>
+                    <td class="px-6 py-4 text-gray-700">{{ emp.title }}</td>
+                    <td class="px-6 py-4 text-gray-700">{{ emp.price }}</td>
+                    <td class="px-6 py-4 text-gray-700">{{ emp.weight }}</td>
+                    <!-- Add a drag handle indicator -->
+                    <td class="px-2 py-4 text-gray-400">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path
+                                d="M7 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0 6a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0 6a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm6-12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0 6a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0 6a2 2 0 1 0 0 4 2 2 0 0 0 0-4z">
+                            </path>
+                        </svg>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
